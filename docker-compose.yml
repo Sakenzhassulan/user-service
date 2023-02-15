@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  user:
+    container_name: user
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+      args:
+        - SERVICE=user
+    networks:
+      - testnet
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+  mongodb:
+    container_name: user-mongodb
+    hostname: mongo
+    image: mongo:latest
+    restart: always
+    networks:
+      - testnet
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_REPLICAS: mongo:27017
+    ports:
+      - "27017:27017"
+
+networks:
+  testnet:
+    external: true
+
+volumes:
+  mongo_data:

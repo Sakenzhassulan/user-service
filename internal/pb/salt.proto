@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package salt;
+
+option go_package = "./internal/pb";
+
+service SaltService {
+  rpc GenerateSalt(GenerateSaltRequest) returns (GenerateSaltResponse) {}
+}
+
+
+message GenerateSaltRequest {}
+
+message GenerateSaltResponse {
+  int64 status = 1;
+  string error = 2;
+  string salt = 3;
+}
